@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Executive Credential Identifier - National Protective Service</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- QR Code Generator -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+
+    :root {
+      /* Theme 1 Default: Executive Gold */
+      --theme-border: rgba(217, 119, 6, 0.4);
+      --theme-border-hover: rgba(245, 158, 11, 0.8);
+      --theme-glow: rgba(217, 119, 6, 0.25);
+      --theme-accent: #f59e0b;
+      --theme-accent-light: #fef08a;
+      --theme-text-gradient: linear-gradient(135deg, #fffbeb 0%, #f59e0b 40%, #d97706 70%, #78350f 100%);
+      --theme-badge-bg: rgba(217, 119, 6, 0.1);
+      --glare-color: rgba(255, 215, 0, 0.15);
+    }
+
+    /* Theme 2: Tactical Platinum */
+    [data-theme="platinum"] {
+      --theme-border: rgba(148, 163, 184, 0.4);
+      --theme-border-hover: rgba(226, 232, 240, 0.8);
+      --theme-glow: rgba(148, 163, 184, 0.25);
+      --theme-accent: #cbd5e1;
+      --theme-accent-light: #ffffff;
+      --theme-text-gradient: linear-gradient(135deg, #ffffff 0%, #cbd5e1 40%, #94a3b8 70%, #475569 100%);
+      --theme-badge-bg: rgba(148, 163, 184, 0.1);
+      --glare-color: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Theme 3: Emerald Obsidian */
+    [data-theme="emerald"] {
+      --theme-border: rgba(16, 185, 129, 0.4);
+      --theme-border-hover: rgba(52, 211, 153, 0.8);
+      --theme-glow: rgba(16, 185, 129, 0.25);
+      --theme-accent: #10b981;
+      --theme-accent-light: #a7f3d0;
+      --theme-text-gradient: linear-gradient(135deg, #ecfdf5 0%, #34d399 40%, #059669 70%, #064e3b 100%);
+      --theme-badge-bg: rgba(16, 185, 129, 0.1);
+      --glare-color: rgba(52, 211, 153, 0.15);
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: radial-gradient(circle at center, #0f172a 0%, #030712 100%);
+      color: #f8fafc;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      min-height: 100vh;
+    }
+
+    .font-cinzel {
+      font-family: 'Cinzel', serif;
+    }
+
+    /* Ambient Animated Grid Background */
+    .bg-animated-grid {
+      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+      animation: gridMove 30s linear infinite;
+    }
+
+    @keyframes gridMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 40px 40px; }
+    }
+
+    /* 3D Perspective Scene Envelope */
+    .scene-container {
+      perspective: 2000px;
+      perspective-origin: 50% 50%;
+    }
+
+    .card-viewport-frame {
+      width: min(94vw, 980px);
+      height: min(72vh, 560px);
+      position: relative;
+    }
+
+    /* Card Flipper Outer Wrapper */
+    .card-flipper-wrapper {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.8s cubic-bezier(0.34, 1.25, 0.64, 1);
+    }
+
+    .card-flipper-wrapper.flipped {
+      transform: rotateY(180deg) !important;
+    }
+
+    /* Tilt Layer */
+    .card-tilt-layer {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.15s ease-out;
+    }
+
+    /* Premium Metallic Face Shells */
+    .card-face {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 
+        0 25px 60px -15px rgba(0, 0, 0, 0.9),
+        0 0 35px var(--theme-glow),
+        inset 0 1px 2px rgba(255, 255, 255, 0.2);
+      border: 1.5px solid var(--theme-border);
+      background: linear-gradient(135deg, #0b0f19 0%, #030712 50%, #0b1120 100%);
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card-back {
+      transform: rotateY(180deg);
+    }
+
+    /* Dynamic Metallic Glare */
+    .glare-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at var(--glare-x, 50%) var(--glare-y, 50%), var(--glare-color) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    /* Theme Dynamic Text Gradient */
+    .theme-gradient-text {
+      background: var(--theme-text-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .theme-glow-box {
+      box-shadow: 0 0 20px var(--theme-glow);
+    }
+
+    /* Security Watermark Overlay */
+    .security-watermark {
+      background-image: 
+        radial-gradient(var(--theme-glow) 1px, transparent 0),
+        linear-gradient(45deg, transparent 48%, rgba(255, 255, 255, 0.02) 50%, transparent 52%);
+      background-size: 24px 24px, 60px 60px;
+    }
+
+    /* Glassmorphic Controls Floating Bar */
+    .glass-hud {
+      background: rgba(15, 23, 42, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--theme-border);
+    }
+
+    /* Page View Display Transitions */
+    .page-view {
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .page-view.hidden-page {
+      display: none !important;
+      opacity: 0;
+      transform: scale(0.98);
+    }
+
+    @media print {
+      body { background: white; color: black; }
+      .no-print { display: none !important; }
+      .card-viewport-frame {
+        width: 3.5in;
+        height: 2in;
+        page-break-after: always;
+      }
+    }
+  </style>
+</head>
+<body class="relative select-none flex flex-col items-center justify-between min-h-screen p-3 md:p-6 bg-animated-grid">
+
+  <!-- TOP HEADER HUD NAV -->
+  <header class="no-print w-full max-w-6xl flex items-center justify-between z-40 mb-2 md:mb-4">
+    
+    <!-- Branding Badge -->
+    <div class="glass-hud px-4 py-2 rounded-full flex items-center gap-3 shadow-2xl transition-all duration-300">
+      <div class="w-8 h-8 rounded-full bg-slate-900/80 flex items-center justify-center text-[var(--theme-accent)] border border-[var(--theme-border)]">
+        <i data-lucide="shield" class="w-4 h-4"></i>
+      </div>
+      <div>
+        <h1 class="font-cinzel text-xs md:text-sm font-bold tracking-widest text-slate-100 uppercase">National Protective Service</h1>
+        <p class="text-[9px] md:text-[10px] text-slate-400 tracking-wider">EXECUTIVE CREDENTIAL IDENTIFIER</p>
+      </div>
+    </div>
+
+    <!-- Actions Navigation & Controls -->
+    <div class="relative flex items-center gap-2.5">
+      
+      <!-- Theme Switcher Selector -->
+      <div class="glass-hud px-3 py-1.5 rounded-full flex items-center gap-2 text-xs">
+        <i data-lucide="palette" class="w-4 h-4 text-slate-400"></i>
+        <select id="themeSelector" onchange="changeTheme(this.value)" class="bg-transparent text-slate-200 text-xs font-semibold focus:outline-none cursor-pointer">
+          <option value="gold" class="bg-slate-900 text-amber-400">Executive Gold</option>
+          <option value="platinum" class="bg-slate-900 text-slate-200">Tactical Platinum</option>
+          <option value="emerald" class="bg-slate-900 text-emerald-400">Emerald Obsidian</option>
+        </select>
+      </div>
+
+      <!-- Quick Route Button -->
+      <button id="navRouteBtn" onclick="navigatePath()" class="glass-hud px-4 py-2 rounded-full flex items-center gap-2 bg-slate-900/80 hover:bg-slate-800 text-slate-200 border border-[var(--theme-border)] transition-all duration-300 hover:scale-105 text-xs font-semibold uppercase tracking-wider shadow-lg">
+        <i data-lucide="sliders-horizontal" class="w-4 h-4 text-[var(--theme-accent)]"></i>
+        <span id="navRouteText">Personalize Card (/1)</span>
+      </button>
+
+      <!-- Dropdown Menu -->
+      <div class="relative">
+        <button onclick="toggleDropdown()" class="glass-hud p-2 rounded-full flex items-center justify-center bg-slate-900/80 hover:bg-slate-800 text-slate-200 border border-[var(--theme-border)] transition-all duration-300 hover:scale-105 shadow-lg">
+          <i data-lucide="more-vertical" class="w-5 h-5 text-[var(--theme-accent)]"></i>
+        </button>
+
+        <div id="actionsDropdown" class="hidden absolute right-0 mt-3 w-56 glass-hud rounded-2xl shadow-2xl p-2 border border-[var(--theme-border)] z-50 transition-all duration-200">
+          <button onclick="flipCard(); toggleDropdown();" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs text-slate-200 hover:bg-slate-800 transition-all text-left">
+            <i data-lucide="rotate-3d" class="w-4 h-4 text-[var(--theme-accent)]"></i>
+            <span>Flip Card View</span>
+          </button>
+          <button onclick="triggerFileInput(); toggleDropdown();" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs text-slate-200 hover:bg-slate-800 transition-all text-left">
+            <i data-lucide="camera" class="w-4 h-4 text-[var(--theme-accent)]"></i>
+            <span>Change Photo</span>
+          </button>
+          <div class="my-1 border-t border-slate-800"></div>
+          <button onclick="window.print(); toggleDropdown();" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs text-slate-200 hover:bg-slate-800 transition-all text-left">
+            <i data-lucide="printer" class="w-4 h-4 text-[var(--theme-accent)]"></i>
+            <span>Print Credentials</span>
+          </button>
+          <button onclick="downloadVCard(); toggleDropdown();" class="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs text-slate-200 hover:bg-slate-800 transition-all text-left">
+            <i data-lucide="vcard" class="w-4 h-4 text-[var(--theme-accent)]"></i>
+            <span>Export vCard</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- HIDDEN FILE INPUT -->
+  <input type="file" id="filePhotoInput" accept="image/*" class="hidden" onchange="handleFileUpload(event)">
+
+  <!-- VIEW 1: CARD PRESENTATION VIEW -->
+  <main id="cardViewPage" class="page-view scene-container my-auto flex items-center justify-center w-full">
+    <div class="card-viewport-frame" id="cardContainer">
+      
+      <!-- Flipper Inner Architecture -->
+      <div id="cardFlipper" class="card-flipper-wrapper">
+        <div id="cardTiltLayer" class="card-tilt-layer">
+
+          <!-- FRONT FACE -->
+          <div class="card-face card-front flex flex-col justify-between p-6 md:p-10 relative security-watermark">
+            <div class="glare-overlay" id="glareFront"></div>
+
+            <!-- Top Branding Bar -->
+            <div class="flex items-start justify-between z-10 border-b border-slate-800/80 pb-4">
+              <div class="flex items-center gap-4">
+                <div class="w-12 h-12 md:w-16 md:h-16 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-950 border border-[var(--theme-border)] flex items-center justify-center shadow-inner theme-glow-box">
+                  <i data-lucide="shield-check" class="w-7 h-7 md:w-9 md:h-9 text-[var(--theme-accent)]"></i>
+                </div>
+                <div>
+                  <div id="displayCompany" class="font-cinzel text-lg md:text-2xl font-black tracking-wider theme-gradient-text">NATIONAL PROTECTIVE SERVICE</div>
+                  <div id="displayTagline" class="text-[10px] md:text-xs text-slate-400 tracking-widest uppercase font-bold">Integrity • Vigilance • Protection</div>
+                </div>
+              </div>
+              
+              <div class="text-right hidden sm:block">
+                <span class="inline-block px-3 py-1 rounded-full text-[10px] md:text-xs font-mono bg-[var(--theme-badge-bg)] border border-[var(--theme-border)] text-[var(--theme-accent)] shadow-sm">
+                  ID: <span id="displayBadgeId">NPS-8842-EXEC</span>
+                </span>
+              </div>
+            </div>
+
+            <!-- Main Body Details -->
+            <div class="grid grid-cols-12 gap-6 items-center my-auto z-10">
+              
+              <!-- Photo Frame -->
+              <div class="col-span-4 sm:col-span-3 flex justify-center">
+                <div class="relative group cursor-pointer" onclick="triggerFileInput()" title="Click to change photo">
+                  <div class="w-24 h-24 sm:w-36 sm:h-36 md:w-40 md:h-40 rounded-2xl overflow-hidden border-2 border-[var(--theme-border)] shadow-2xl bg-slate-900 relative theme-glow-box">
+                    <img id="displayPhoto" src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=600" alt="Executive Photo" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-slate-950/75 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-[var(--theme-accent)] text-xs font-semibold backdrop-blur-sm">
+                      <i data-lucide="camera" class="w-6 h-6 mb-1"></i>
+                      <span>Change</span>
+                    </div>
+                  </div>
+                  <div class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-emerald-500 border-2 border-slate-950 flex items-center justify-center text-slate-950 font-bold text-[10px] shadow-lg" title="Verified Active">
+                    ✓
+                  </div>
+                </div>
+              </div>
+
+              <!-- Executive Info -->
+              <div class="col-span-8 sm:col-span-9 space-y-2 md:space-y-3 pl-2 md:pl-4">
+                <div>
+                  <h2 id="displayName" class="text-xl sm:text-3xl md:text-4xl font-black font-cinzel text-slate-100 tracking-wide">BHAVANAND JUPALLI</h2>
+                  <p id="displayTitle" class="text-xs sm:text-sm md:text-base font-bold text-[var(--theme-accent)] tracking-widest uppercase mt-0.5">Manager - Security Operations</p>
+                </div>
+
+                <!-- Quick Contacts Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs md:text-sm text-slate-300 pt-3 border-t border-slate-800/80">
+                  <div class="flex items-center gap-2.5">
+                    <i data-lucide="phone" class="w-4 h-4 text-[var(--theme-accent)] shrink-0"></i>
+                    <span id="displayPhone" class="truncate font-medium">+1 (555) 019-2834</span>
+                  </div>
+                  <div class="flex items-center gap-2.5">
+                    <i data-lucide="mail" class="w-4 h-4 text-[var(--theme-accent)] shrink-0"></i>
+                    <span id="displayEmail" class="truncate font-medium">b.jupalli@nationalprotectiveservice.com</span>
+                  </div>
+                  <div class="flex items-center gap-2.5 sm:col-span-2">
+                    <i data-lucide="globe" class="w-4 h-4 text-[var(--theme-accent)] shrink-0"></i>
+                    <span id="displayWebsite" class="truncate font-medium">https://nationalprotectiveservice.com</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Footer Trim -->
+            <div class="flex items-center justify-between z-10 pt-3 border-t border-slate-800/80 text-[10px] md:text-xs text-slate-400">
+              <div class="flex items-center gap-2">
+                <i data-lucide="map-pin" class="w-3.5 h-3.5 text-[var(--theme-accent)]"></i>
+                <span id="displayAddress">Corporate Headquarters • San Jose, CA</span>
+              </div>
+              <div class="text-[var(--theme-accent)] font-mono tracking-widest uppercase text-[9px] md:text-[11px] font-semibold">Licensed & Bonded Security</div>
+            </div>
+            
+            <!-- Corner Accents -->
+            <div class="absolute top-0 right-0 w-36 h-36 bg-gradient-to-bl from-white/5 to-transparent rounded-bl-full pointer-events-none"></div>
+            <div class="absolute bottom-0 left-0 w-36 h-36 bg-gradient-to-tr from-white/5 to-transparent rounded-tr-full pointer-events-none"></div>
+          </div>
+
+          <!-- BACK FACE -->
+          <div class="card-face card-back flex flex-col justify-between p-6 md:p-10 security-watermark">
+            <div class="glare-overlay" id="glareBack"></div>
+
+            <!-- Back Header -->
+            <div class="flex items-center justify-between border-b border-slate-800/80 pb-4">
+              <div class="flex items-center gap-3">
+                <i data-lucide="shield" class="w-6 h-6 text-[var(--theme-accent)]"></i>
+                <span class="font-cinzel text-sm md:text-lg font-bold text-slate-200 tracking-wider">EXECUTIVE VERIFICATION</span>
+              </div>
+              <span class="text-xs font-mono text-[var(--theme-accent)] font-semibold">OFFICIAL BADGE</span>
+            </div>
+
+            <!-- Center Details & Dynamic QR -->
+            <div class="grid grid-cols-12 gap-6 items-center my-auto z-10">
+              <div class="col-span-7 sm:col-span-8 space-y-3">
+                <h3 class="font-cinzel text-base md:text-xl font-bold text-slate-100">SCAN TO SAVE CONTACT</h3>
+                <p class="text-xs md:text-sm text-slate-400 leading-relaxed">
+                  Scan the encrypted QR code with any mobile device to sync official executive credentials directly to your contacts.
+                </p>
+                <div class="pt-2 flex flex-wrap gap-2 text-[10px] md:text-[11px] text-[var(--theme-accent)] font-mono">
+                  <span class="bg-slate-900/90 px-2.5 py-1 rounded-lg border border-slate-800 shadow-sm">24/7 Security Patrol</span>
+                  <span class="bg-slate-900/90 px-2.5 py-1 rounded-lg border border-slate-800 shadow-sm">Executive Protection</span>
+                  <span class="bg-slate-900/90 px-2.5 py-1 rounded-lg border border-slate-800 shadow-sm">Risk Assessment</span>
+                </div>
+              </div>
+
+              <!-- QR Code Container -->
+              <div class="col-span-5 sm:col-span-4 flex flex-col items-center justify-center">
+                <div class="p-3 bg-white rounded-2xl shadow-2xl border-2 border-[var(--theme-border)] theme-glow-box transform transition-transform hover:scale-105">
+                  <div id="qrcode"></div>
+                </div>
+                <span class="text-[10px] text-slate-400 mt-2 font-mono font-medium tracking-wider">ENCRYPTED vCARD</span>
+              </div>
+            </div>
+
+            <!-- Back Footer -->
+            <div class="border-t border-slate-800/80 pt-3 text-center text-[10px] md:text-xs text-slate-400 font-medium">
+              National Protective Service Corporation • All Rights Reserved
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- VIEW 2: FULL PERSONALIZATION PAGE -->
+  <main id="personalizePage" class="page-view hidden-page w-full max-w-4xl my-auto py-6">
+    <div class="glass-hud p-6 md:p-10 rounded-3xl shadow-2xl border border-[var(--theme-border)]">
+      
+      <!-- Page Header -->
+      <div class="flex items-center justify-between pb-6 border-b border-slate-800 mb-6">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-slate-900 border border-[var(--theme-border)] flex items-center justify-center text-[var(--theme-accent)]">
+            <i data-lucide="sliders-horizontal" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h2 class="font-cinzel text-xl md:text-2xl font-bold text-slate-100">Personalize Executive Credential</h2>
+            <p class="text-xs text-slate-400">Update credential information in real-time. URL Path: <code class="text-[var(--theme-accent)]">/1</code></p>
+          </div>
+        </div>
+        <button onclick="navigatePath('/')" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold flex items-center gap-2 transition-all">
+          <i data-lucide="eye" class="w-4 h-4"></i>
+          <span>View Card</span>
+        </button>
+      </div>
+
+      <!-- Form Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-5 text-xs">
+        
+        <div class="md:col-span-2">
+          <label class="block text-slate-300 font-semibold mb-1.5">Executive Photo</label>
+          <div class="flex items-center gap-4">
+            <button onclick="triggerFileInput()" class="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 border border-[var(--theme-border)] rounded-xl text-[var(--theme-accent)] flex items-center gap-2 transition-colors font-semibold">
+              <i data-lucide="upload" class="w-4 h-4"></i>
+              <span>Upload Local Photo</span>
+            </button>
+            <span class="text-slate-500">or edit direct image URL below</span>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-slate-400 font-medium mb-1">Full Name</label>
+          <input type="text" id="inputName" value="BHAVANAND JUPALLI" oninput="updateCard()" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-200 focus:border-[var(--theme-accent)] focus:outline-none transition-colors">
+        </div>
+
+        <div>
+          <label class="block text-slate-400 font-medium mb-1">Job Title</label>
+          <input type="text" id="inputTitle" value="Manager - Security Operations" oninput="updateCard()" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-200 focus:border-[var(--theme-accent)] focus:outline-none transition-colors">
+        </div>
+
+        <div>
+          <label class="block text-slate-400 font-medium mb-1">Phone Number</label>
+          <input type="text" id="inputPhone" value="+1 (555) 019-2834" oninput="updateCard()" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-200 focus:border-[var(--theme-accent)] focus:outline-none transition-colors">
+        </div>
+
+        <div>
+          <label class="block text-slate-400 font-medium mb-1">Email Address</label>
+          <input type="email" id="inputEmail" value="b.jupalli@nationalprotectiveservice.com" oninput="updateCard()" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-200 focus:border-[var(--theme-accent)] focus:outline-none transition-colors">
+        </div>
+
+        <div>
+          <label class="block text-slate-400 font-medium mb-1">Website URL</label>
+          <input type="text" id="inputWebsite" value="https://nationalprotectiveservice.com" oninput="updateCard()" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-200 focus:border-[var(--theme-accent)] focus:outline-none transition-colors">
+        </div>
+
+        <div>
+          <label class="block text-slate-400 font-medium mb-1">Badge / Credential ID</label>
+          <input type="text" id="inputBadgeId" value="NPS-8842-EXEC" oninput="updateCard()" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-200 focus:border-[var(--theme-accent)] focus:outline-none transition-colors">
+        </div>
+
+        <div class="md:col-span-2">
+          <label class="block text-slate-400 font-medium mb-1">Office Address</label>
+          <input type="text" id="inputAddress" value="Corporate Headquarters • San Jose, CA" oninput="updateCard()" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-200 focus:border-[var(--theme-accent)] focus:outline-none transition-colors">
+        </div>
+
+        <div class="md:col-span-2">
+          <label class="block text-slate-400 font-medium mb-1">Photo Image URL</label>
+          <input type="text" id="inputPhoto" value="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=600" oninput="updateCard()" class="w-full bg-slate-950/80 border border-slate-800 rounded-xl px-3.5 py-2.5 text-slate-200 focus:border-[var(--theme-accent)] focus:outline-none transition-colors">
+        </div>
+
+      </div>
+
+      <!-- Footer Action -->
+      <div class="mt-8 pt-6 border-t border-slate-800 flex items-center justify-between">
+        <button onclick="navigatePath('/')" class="px-6 py-3 rounded-xl bg-[var(--theme-accent)] text-slate-950 font-bold text-xs uppercase tracking-wider transition-all shadow-lg hover:scale-105">
+          Save & Return to Card View
+        </button>
+        <span class="text-xs text-slate-500">Live preview updates active</span>
+      </div>
+    </div>
+  </main>
+
+  <!-- BOTTOM CONTROL DECK HUD -->
+  <footer class="no-print w-full max-w-lg glass-hud px-6 py-3 rounded-full flex items-center justify-around text-xs z-40 my-2 shadow-2xl">
+    <button onclick="flipCard()" class="flex items-center gap-2 text-slate-300 hover:text-[var(--theme-accent)] transition-colors font-semibold">
+      <i data-lucide="rotate-3d" class="w-4 h-4 text-[var(--theme-accent)]"></i>
+      <span>Flip Card</span>
+    </button>
+    <div class="h-4 w-px bg-slate-800"></div>
+    <button onclick="navigatePath('/1')" class="flex items-center gap-2 text-slate-300 hover:text-[var(--theme-accent)] transition-colors font-semibold">
+      <i data-lucide="edit-3" class="w-4 h-4 text-[var(--theme-accent)]"></i>
+      <span>Edit Details</span>
+    </button>
+    <div class="h-4 w-px bg-slate-800"></div>
+    <button onclick="downloadVCard()" class="flex items-center gap-2 text-slate-300 hover:text-[var(--theme-accent)] transition-colors font-semibold">
+      <i data-lucide="download" class="w-4 h-4 text-[var(--theme-accent)]"></i>
+      <span>Save vCard</span>
+    </button>
+  </footer>
+
+  <!-- JAVASCRIPT LOGIC CONTROLLER -->
+  <script>
+    // Initialize Lucide Icons
+    lucide.createIcons();
+
+    // State Tracking
+    let isFlipped = false;
+    let qrCodeInstance = null;
+
+    // --- THEME SWITCHER CONTROLLER ---
+    function changeTheme(themeName) {
+      if (themeName === 'gold') {
+        document.documentElement.removeAttribute('data-theme');
+      } else {
+        document.documentElement.setAttribute('data-theme', themeName);
+      }
+    }
+
+    // --- CLIENT-SIDE ROUTING CONTROLLER (/ and /1) ---
+    function handleRouting() {
+      const path = window.location.pathname;
+      const hash = window.location.hash;
+
+      const cardPage = document.getElementById('cardViewPage');
+      const personalizePage = document.getElementById('personalizePage');
+      const navRouteText = document.getElementById('navRouteText');
+
+      if (path === '/1' || hash === '#1' || hash === '#/1') {
+        cardPage.classList.add('hidden-page');
+        personalizePage.classList.remove('hidden-page');
+        navRouteText.innerText = 'View Card (/)';
+      } else {
+        personalizePage.classList.add('hidden-page');
+        cardPage.classList.remove('hidden-page');
+        navRouteText.innerText = 'Personalize Card (/1)';
+      }
+    }
+
+    function navigatePath(targetPath) {
+      if (targetPath === '/1') {
+        history.pushState(null, '', '/1');
+      } else {
+        history.pushState(null, '', '/');
+      }
+      handleRouting();
+    }
+
+    window.addEventListener('popstate', handleRouting);
+
+    // --- RELIABLE 3D FLIP MECHANISM ---
+    function flipCard() {
+      const flipper = document.getElementById('cardFlipper');
+      const tiltLayer = document.getElementById('cardTiltLayer');
+      
+      isFlipped = !isFlipped;
+
+      // Reset tilt during flip
+      tiltLayer.style.transform = 'rotateX(0deg) rotateY(0deg)';
+
+      if (isFlipped) {
+        flipper.classList.add('flipped');
+      } else {
+        flipper.classList.remove('flipped');
+      }
+    }
+
+    // --- INTERACTIVE PARALLAX TILT & GLARE ---
+    const container = document.getElementById('cardContainer');
+    const tiltLayer = document.getElementById('cardTiltLayer');
+    const glareFront = document.getElementById('glareFront');
+    const glareBack = document.getElementById('glareBack');
+
+    if (container && tiltLayer) {
+      container.addEventListener('mousemove', (e) => {
+        const rect = container.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        // Gentle tilt physics
+        const rotateX = ((y - centerY) / centerY) * -10;
+        const rotateY = ((x - centerX) / centerX) * 10;
+
+        tiltLayer.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        
+        // Update Dynamic Glare Position
+        const glareX = (x / rect.width) * 100;
+        const glareY = (y / rect.height) * 100;
+        
+        const targetGlare = isFlipped ? glareBack : glareFront;
+        targetGlare.style.setProperty('--glare-x', `${glareX}%`);
+        targetGlare.style.setProperty('--glare-y', `${glareY}%`);
+      });
+
+      container.addEventListener('mouseleave', () => {
+        tiltLayer.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      });
+    }
+
+    // --- DROPDOWN CONTROL ---
+    function toggleDropdown() {
+      const dropdown = document.getElementById('actionsDropdown');
+      dropdown.classList.toggle('hidden');
+    }
+
+    document.addEventListener('click', (e) => {
+      const dropdown = document.getElementById('actionsDropdown');
+      const button = e.target.closest('button');
+      if (!button || !button.getAttribute('onclick')?.includes('toggleDropdown')) {
+        if (dropdown && !dropdown.classList.contains('hidden')) {
+          dropdown.classList.add('hidden');
+        }
+      }
+    });
+
+    // --- PHOTO UPLOAD HANDLING ---
+    function triggerFileInput() {
+      document.getElementById('filePhotoInput').click();
+    }
+
+    function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const photoUrl = e.target.result;
+          document.getElementById('displayPhoto').src = photoUrl;
+          document.getElementById('inputPhoto').value = photoUrl;
+        };
+        reader.readAsDataURL(file);
+      }
+    }
+
+    // --- LIVE CARD DATA SYNC ---
+    function updateCard() {
+      const name = document.getElementById('inputName').value;
+      const title = document.getElementById('inputTitle').value;
+      const phone = document.getElementById('inputPhone').value;
+      const email = document.getElementById('inputEmail').value;
+      const website = document.getElementById('inputWebsite').value;
+      const badgeId = document.getElementById('inputBadgeId').value;
+      const address = document.getElementById('inputAddress').value;
+      const photo = document.getElementById('inputPhoto').value;
+
+      document.getElementById('displayName').innerText = name || 'NAME REQUIRED';
+      document.getElementById('displayTitle').innerText = title || 'TITLE REQUIRED';
+      document.getElementById('displayPhone').innerText = phone || '';
+      document.getElementById('displayEmail').innerText = email || '';
+      document.getElementById('displayWebsite').innerText = website || '';
+      document.getElementById('displayBadgeId').innerText = badgeId || 'NPS-0000';
+      document.getElementById('displayAddress').innerText = address || '';
+      if (photo) document.getElementById('displayPhoto').src = photo;
+
+      generateQRCode(name, phone, email, website);
+    }
+
+    // --- DYNAMIC vCARD QR GENERATOR ---
+    function generateQRCode(name, phone, email, website) {
+      const qrContainer = document.getElementById('qrcode');
+      qrContainer.innerHTML = '';
+
+      const vCardData = `BEGIN:VCARD\nVERSION:3.0\nN:${name};;;;\nFN:${name}\nORG:National Protective Service\nTEL;TYPE=CELL:${phone}\nEMAIL:${email}\nURL:${website}\nEND:VCARD`;
+
+      qrCodeInstance = new QRCode(qrContainer, {
+        text: vCardData,
+        width: 105,
+        height: 105,
+        colorDark : "#030712",
+        colorLight : "#ffffff",
+        correctLevel : QRCode.CorrectLevel.H
+      });
+    }
+
+    // --- EXPORT vCARD FILE ---
+    function downloadVCard() {
+      const name = document.getElementById('inputName').value;
+      const phone = document.getElementById('inputPhone').value;
+      const email = document.getElementById('inputEmail').value;
+      const website = document.getElementById('inputWebsite').value;
+
+      const vCardText = `BEGIN:VCARD\nVERSION:3.0\nN:${name};;;;\nFN:${name}\nORG:National Protective Service\nTEL;TYPE=CELL:${phone}\nEMAIL:${email}\nURL:${website}\nEND:VCARD`;
+      
+      const blob = new Blob([vCardText], { type: 'text/vcard' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${name.replace(/\s+/g, '_')}_NPS.vcf`;
+      a.click();
+      window.URL.revokeObjectURL(url);
+    }
+
+    // --- INITIALIZATION ---
+    window.onload = () => {
+      handleRouting();
+      updateCard();
+    };
+  </script>
+</body>
+</html>
