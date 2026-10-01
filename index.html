@@ -6,61 +6,966 @@
 <title>National Protective Service · Executive Card</title>
 <script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
-:root{--bg:#101411;--surface:#1b211c;--ink:#f3f2e9;--muted:#9fa69e;--accent:#d5c49a;--line:#ffffff22;--glow:#ad96651c;--serif:Georgia,'Times New Roman',serif;color-scheme:dark}
-[data-theme=sapphire]{--bg:#0b1628;--surface:#14253c;--ink:#eef5ff;--muted:#9daec5;--accent:#9fc8ff;--glow:#4489dd24}
-[data-theme=emerald]{--bg:#09251f;--surface:#12382e;--ink:#ecf8ef;--muted:#a1bdb3;--accent:#9ee0b6;--glow:#69c79a22}
-[data-theme=ivory]{--bg:#f5f1e8;--surface:#eae4d8;--ink:#252922;--muted:#63695e;--accent:#78603a;--line:#25292226;--glow:#ae956525;color-scheme:light}
-[data-theme=plum]{--bg:#241724;--surface:#352335;--ink:#faeff6;--muted:#bda6b9;--accent:#e5b8d0;--glow:#ca83b523}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:'DM Sans',sans-serif}button,input{font:inherit}button,a{-webkit-tap-highlight-color:transparent}button{cursor:pointer}button:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:5px}button{color:inherit}button, input{border:1px solid var(--line)}button{background:transparent}a{color:inherit;text-decoration:none}button:hover{background:var(--glow)}svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
-.viewport{min-height:100svh;perspective:2200px;overflow:hidden}.flipper{display:grid;transform-style:preserve-3d;transition:transform 950ms cubic-bezier(.22,.7,.18,1)}.flipper.flipped{transform:rotateY(180deg)}.face{grid-area:1/1;min-width:0;min-height:100svh;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:radial-gradient(ellipse at 90% 30%,var(--glow),transparent 55%),var(--bg);padding:34px clamp(24px,5vw,90px) 110px;display:flex;flex-direction:column;position:relative;transition:background-color .6s,color .6s}.back{transform:rotateY(180deg)}.face:before{content:'';position:absolute;inset:14px;border:1px solid var(--line);pointer-events:none}.brand-row{display:flex;justify-content:space-between;align-items:center;gap:24px;border-bottom:1px solid var(--line);padding-bottom:27px}.brand{display:flex;gap:15px;align-items:center}.emblem{width:49px;height:57px;color:var(--accent)}.brand-name{font-family:Manrope,sans-serif;font-size:13px;font-weight:700;letter-spacing:.13em;line-height:1.6;text-transform:uppercase}.eyebrow{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);line-height:1.8}.edition{display:flex;align-items:center;gap:10px;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent)}.edition:before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent)}
-.hero{flex:1;display:grid;grid-template-columns:1.35fr 1fr;align-items:center;gap:clamp(30px,7vw,120px);padding:44px 0}.intro{animation:rise 1s .1s both}.overline{display:flex;align-items:center;gap:12px;color:var(--accent);font-size:11px;letter-spacing:.19em;text-transform:uppercase}.overline:before{content:'';width:34px;height:1px;background:var(--accent)}h1{font-family:var(--serif);font-weight:400;font-size:clamp(46px,6.4vw,108px);letter-spacing:-.055em;line-height:1.02;margin:24px 0;overflow-wrap:anywhere;max-width:850px}h1 span{display:block;color:var(--accent)}.role{font-size:clamp(12px,1.1vw,16px);color:var(--muted);letter-spacing:.06em;line-height:1.7}.contacts{margin-top:35px;display:grid;gap:15px}.contact{display:flex;align-items:center;gap:14px;font-size:13px;color:var(--muted);width:fit-content;max-width:100%;transition:color .2s,transform .2s}.contact:hover{color:var(--accent);transform:translateX(4px)}.contact svg{width:17px;color:var(--accent)}.contact span{overflow-wrap:anywhere;min-width:0}.hero-actions{display:flex;gap:12px;margin-top:34px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:6px;padding:13px 19px;font-size:12px;font-weight:600;transition:background .25s,transform .25s}.btn:hover{transform:translateY(-2px)}.primary{background:var(--accent);color:var(--bg);border-color:var(--accent)}.primary:hover{background:var(--accent);filter:brightness(1.08)}.btn svg{width:17px;height:17px}
-.portrait-wrap{position:relative;max-width:470px;width:100%;justify-self:end;animation:rise 1.2s .25s both}.portrait-wrap:before{content:'';position:absolute;inset:-13px 13px 13px -13px;border:1px solid var(--accent);opacity:.35}.portrait{display:block;position:relative;padding:0;width:100%;height:clamp(270px,48vh,590px);border:0;overflow:hidden;background:var(--surface);text-align:left}.portrait img{width:100%;height:100%;object-fit:cover;object-position:center 35%;filter:saturate(.65);transition:transform .8s,filter .8s}.portrait:hover img{transform:scale(1.035);filter:saturate(1)}.portrait:after{content:'';position:absolute;inset:0;background:linear-gradient(transparent 60%,#0009);pointer-events:none}.photo-hint{position:absolute;bottom:20px;left:20px;color:#fff;z-index:1;font-size:10px;letter-spacing:.15em;text-transform:uppercase}.portrait-label{display:flex;justify-content:space-between;gap:12px;padding-top:19px;font-size:10px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}.portrait-label b{font-weight:500;color:var(--accent)}.footer{display:flex;justify-content:space-between;align-items:center;gap:18px;border-top:1px solid var(--line);padding-top:22px;color:var(--muted);font-size:10px;letter-spacing:.07em}.footer div{display:flex;align-items:center;gap:8px}.footer svg{width:14px;height:14px}
-.toolbar{position:fixed;bottom:max(22px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);z-index:5;display:flex;align-items:center;gap:6px;padding:7px;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 40px #0003;max-width:calc(100% - 32px)}.toolbar button{border:0;white-space:nowrap;padding:11px 15px;border-radius:7px;font-size:11px;display:flex;gap:8px;align-items:center}.toolbar svg{width:16px;height:16px}.toolbar .divider{height:24px;width:1px;background:var(--line)}.theme-pop{position:absolute;bottom:calc(100% + 12px);left:0;width:280px;background:var(--surface);border:1px solid var(--line);padding:20px;border-radius:12px;box-shadow:0 15px 50px #0004;animation:rise .25s both}.theme-pop[hidden]{display:none}.swatches{display:flex;gap:12px;margin-top:14px}.toolbar .swatch{width:36px;height:36px;border:3px solid var(--surface);outline:1px solid var(--line);padding:0;border-radius:50%;background:var(--swatch)}.toolbar .swatch[aria-pressed=true]{outline:2px solid var(--accent);outline-offset:3px}.theme-name{margin-top:16px;font-size:12px;color:var(--accent)}
-.back-content{flex:1;display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:60px;padding:50px 0}.back h2{font:400 clamp(46px,6vw,90px)/1.05 var(--serif);letter-spacing:-.04em;margin:22px 0}.back p{color:var(--muted);font-size:14px;line-height:1.9;max-width:430px}.tags{display:flex;gap:8px;flex-wrap:wrap;margin:24px 0}.tags span{font-size:10px;padding:9px 12px;border:1px solid var(--line);border-radius:30px;color:var(--accent)}.qr-block{justify-self:center;text-align:center}.qr-paper{padding:25px;background:#fff;border-radius:12px;box-shadow:0 25px 60px #0002;margin-bottom:25px}#qrcode{width:240px;min-height:240px;color:#333;font-size:13px;display:grid;place-items:center}#qrcode img,#qrcode canvas{max-width:100%;height:auto}.qr-block .eyebrow{color:var(--accent)}
-dialog{position:fixed;inset:0 0 0 auto;margin:0;width:min(460px,100%);height:100dvh;max-height:none;max-width:100%;padding:0;background:var(--bg);color:var(--ink);border:0;border-left:1px solid var(--line);box-shadow:-30px 0 100px #0004}dialog[open]{animation:slide .35s ease-out}dialog::backdrop{background:#0008;backdrop-filter:blur(7px)}.drawer-head{padding:28px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center}.drawer-head h2{font:400 25px var(--serif);margin:5px 0}.close{border-radius:50%;width:36px;height:36px;font-size:22px}.form{padding:28px;display:grid;gap:18px}.form label{display:grid;gap:8px;font-size:11px;color:var(--muted)}input{width:100%;padding:12px;border-radius:6px;background:var(--surface);color:var(--ink);font-size:13px}input:focus{outline:1px solid var(--accent)}.form .btn{width:100%}.notice{position:fixed;top:22px;left:50%;transform:translateX(-50%);z-index:10;background:var(--surface);color:var(--ink);padding:13px 22px;border:1px solid var(--line);border-radius:8px;font-size:12px;box-shadow:0 10px 40px #0004}.notice:empty{display:none}
-@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}@keyframes slide{from{transform:translateX(100%)}to{transform:translateX(0)}}
-@media(min-width:1500px){.hero{gap:10vw}.portrait-wrap{max-width:550px}}
-@media(max-width:700px){.face{padding:25px 25px 106px}.face:before{inset:9px}.brand-row{padding-bottom:20px}.brand-name{font-size:10px;letter-spacing:.08em}.emblem{width:35px;height:43px}.edition{display:none}.hero{grid-template-columns:1fr;gap:30px;padding:30px 0}.intro{order:1}h1{font-size:clamp(43px,10vw,70px);margin:18px 0}.portrait-wrap{justify-self:start;max-width:none;order:2;margin-top:8px}.portrait{height:260px}.portrait img{object-position:center 30%}.contacts{margin-top:23px;gap:13px}.contact{font-size:12px}.hero-actions{margin-top:26px}.footer{align-items:start;font-size:9px;line-height:1.7}.footer>span{max-width:100px;text-align:right}.toolbar button{padding:10px 12px}.toolbar .optional{display:none}.back-content{grid-template-columns:1fr;gap:25px;padding:30px 0}.back h2{font-size:44px}.qr-paper{padding:18px}#qrcode{width:210px;min-height:210px}.back p{font-size:12px}.tags{margin:18px 0}.qr-block{padding-bottom:12px}}
-@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
-@media print{.toolbar,dialog,.notice,.hero-actions,.photo-hint{display:none!important}.viewport{overflow:visible;perspective:none}.flipper,.flipper.flipped{display:block;transform:none}.face{min-height:95vh;break-after:page;background:white;color:#111;--ink:#111;--muted:#555;--accent:#70552e;--line:#ccc;padding:35px;backface-visibility:visible}.back{transform:none}.portrait-wrap{display:block}.face:before{display:none}.hero{grid-template-columns:1.3fr 1fr}.portrait{height:350px}h1{font-size:60px}}
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --bg: #0b0f0c;
+  --surface: #141a15;
+  --surface-border: #232c24;
+  --ink: #f4f5f0;
+  --muted: #8e988f;
+  --accent: #d0be90;
+  --accent-glow: rgba(208, 190, 144, 0.25);
+  --line: rgba(255, 255, 255, 0.12);
+  --font-heading: 'Cinzel', serif;
+  --font-body: 'Plus Jakarta Sans', sans-serif;
+  color-scheme: dark;
+}
+
+[data-theme=sapphire] {
+  --bg: #070d19;
+  --surface: #0f1a2e;
+  --surface-border: #1a2b47;
+  --ink: #f0f4fd;
+  --muted: #8b9bb4;
+  --accent: #8cb6f5;
+  --accent-glow: rgba(140, 182, 245, 0.25);
+}
+
+[data-theme=emerald] {
+  --bg: #051410;
+  --surface: #0c241d;
+  --surface-border: #15382e;
+  --ink: #edfae8;
+  --muted: #88a89c;
+  --accent: #78d6a3;
+  --accent-glow: rgba(120, 214, 163, 0.25);
+}
+
+[data-theme=ivory] {
+  --bg: #f4efea;
+  --surface: #e8e1d7;
+  --surface-border: #d4c9ba;
+  --ink: #1c201d;
+  --muted: #5e6660;
+  --accent: #826639;
+  --accent-glow: rgba(130, 102, 57, 0.25);
+  --line: rgba(0, 0, 0, 0.12);
+  color-scheme: light;
+}
+
+[data-theme=plum] {
+  --bg: #160c18;
+  --surface: #251628;
+  --surface-border: #3d2442;
+  --ink: #faeff8;
+  --muted: #ab90aa;
+  --accent: #de9bc0;
+  --accent-glow: rgba(222, 155, 192, 0.25);
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+button, input { font: inherit; }
+button { cursor: pointer; color: inherit; background: transparent; border: 1px solid var(--line); }
+a { color: inherit; text-decoration: none; }
+button:focus-visible, a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+/* Structural Layout */
+.viewport {
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  perspective: 2000px;
+  padding: 20px;
+}
+
+.flipper {
+  width: 100%;
+  max-width: 1050px;
+  display: grid;
+  transform-style: preserve-3d;
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.flipper.flipped {
+  transform: rotateY(180deg);
+}
+
+.face {
+  grid-area: 1/1;
+  min-height: 580px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background: radial-gradient(circle at 85% 20%, var(--accent-glow), transparent 45%), var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: 20px;
+  padding: 40px 48px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+  transition: background 0.5s, border-color 0.5s, color 0.5s;
+}
+
+.face::before {
+  content: '';
+  position: absolute;
+  inset: 12px;
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  pointer-events: none;
+}
+
+.back {
+  transform: rotateY(180deg);
+}
+
+/* Header Branding */
+.brand-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 22px;
+  z-index: 2;
+}
+
+.brand {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+/* Adjusted Logo Style for npslog.png */
+.logo-container {
+  width: 58px;
+  height: 58px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line);
+  padding: 6px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.brand-logo-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px var(--accent-glow));
+}
+
+.brand-title {
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.edition {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.edition::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+/* Main Hero Grid */
+.hero {
+  display: grid;
+  grid-template-columns: 1.3fr 0.9fr;
+  align-items: center;
+  gap: 50px;
+  padding: 30px 0;
+  z-index: 2;
+}
+
+.overline {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--accent);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+
+.overline::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: var(--accent);
+}
+
+h1 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(32px, 4.2vw, 56px);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 16px 0 12px;
+}
+
+h1 span {
+  display: block;
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.role {
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.contacts {
+  margin-top: 28px;
+  display: grid;
+  gap: 12px;
+}
+
+.contact {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--ink);
+  opacity: 0.85;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.contact:hover {
+  opacity: 1;
+  color: var(--accent);
+  transform: translateX(4px);
+}
+
+.contact svg {
+  color: var(--accent);
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  transition: all 0.25s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.primary {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+.primary:hover {
+  background: var(--accent);
+  filter: brightness(1.1);
+  box-shadow: 0 6px 24px var(--accent-glow);
+}
+
+/* Portrait Styling */
+.portrait-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  justify-self: end;
+}
+
+.portrait-wrap::before {
+  content: '';
+  position: absolute;
+  inset: -8px 8px 8px -8px;
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.portrait {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 320px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #000;
+  border: 1px solid var(--line);
+}
+
+.portrait img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  filter: contrast(1.05) saturate(0.85);
+  transition: transform 0.6s ease, filter 0.6s ease;
+}
+
+.portrait:hover img {
+  transform: scale(1.04);
+  filter: contrast(1) saturate(1);
+}
+
+.portrait::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 40%);
+}
+
+.photo-hint {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  color: #fff;
+  z-index: 2;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.portrait-label {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 12px;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+  text-transform: uppercase;
+}
+
+.portrait-label b {
+  color: var(--accent);
+}
+
+/* Footer Section */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--line);
+  padding-top: 18px;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  z-index: 2;
+}
+
+.footer div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Back Face Content */
+.back-content {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  align-items: center;
+  gap: 40px;
+  padding: 20px 0;
+  z-index: 2;
+}
+
+.back h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(28px, 3.5vw, 42px);
+  line-height: 1.15;
+  margin: 14px 0;
+}
+
+.back p {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.8;
+  max-width: 440px;
+}
+
+.tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 20px 0 28px;
+}
+
+.tags span {
+  font-size: 10px;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  color: var(--accent);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.qr-block {
+  text-align: center;
+}
+
+.qr-paper {
+  padding: 16px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+  display: inline-block;
+}
+
+#qrcode {
+  width: 200px;
+  height: 200px;
+  display: grid;
+  place-items: center;
+}
+
+#qrcode img, #qrcode canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Fixed Bottom Control Bar */
+.toolbar {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px;
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  border-radius: 14px;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+  backdrop-filter: blur(12px);
+}
+
+.toolbar button {
+  border: 0;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.toolbar .divider {
+  height: 20px;
+  width: 1px;
+  background: var(--line);
+  margin: 0 4px;
+}
+
+.theme-pop {
+  position: absolute;
+  bottom: calc(100% + 12px);
+  left: 0;
+  width: 260px;
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+}
+
+.theme-pop[hidden] { display: none; }
+.swatches { display: flex; gap: 10px; margin-top: 12px; }
+.swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--swatch);
+  border: 2px solid var(--surface);
+  outline: 1px solid var(--line);
+  padding: 0;
+}
+.swatch[aria-pressed=true] {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* Modal Drawer */
+dialog {
+  position: fixed;
+  inset: 0 0 0 auto;
+  margin: 0;
+  width: min(420px, 100%);
+  height: 100dvh;
+  background: var(--surface);
+  color: var(--ink);
+  border: 0;
+  border-left: 1px solid var(--surface-border);
+  box-shadow: -20px 0 60px rgba(0,0,0,0.5);
+}
+
+dialog[open] { animation: slideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+dialog::backdrop { background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(4px); }
+
+.drawer-head {
+  padding: 24px;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.drawer-head h2 { font-family: var(--font-heading); font-size: 20px; margin: 4px 0 0; }
+.close { border-radius: 50%; width: 32px; height: 32px; font-size: 18px; border: 1px solid var(--line); }
+
+.form { padding: 24px; display: grid; gap: 16px; }
+.form label { display: grid; gap: 6px; font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; }
+input {
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 13px;
+}
+input:focus { outline: 1px solid var(--accent); }
+
+.notice {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  background: var(--surface);
+  color: var(--ink);
+  padding: 12px 20px;
+  border: 1px solid var(--accent);
+  border-radius: 30px;
+  font-size: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+.notice:empty { display: none; }
+
+@keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
+
+/* Responsive adjustments */
+@media (max-width: 850px) {
+  .hero { grid-template-columns: 1fr; gap: 30px; }
+  .portrait-wrap { justify-self: start; max-width: 100%; }
+  .portrait { height: 260px; }
+  .back-content { grid-template-columns: 1fr; }
+  .qr-block { justify-self: start; }
+  .face { padding: 30px 24px; }
+}
+@media print {
+  .toolbar, dialog, .notice, .hero-actions, .photo-hint { display: none !important; }
+  .viewport { perspective: none; }
+  .flipper { transform: none !important; }
+  .face { border: 1px solid #ccc; background: #fff !important; color: #000 !important; }
+}
 </style>
 </head>
 <body>
-<svg style="display:none" xmlns="http://www.w3.org/2000/svg"><symbol id="shield" viewBox="0 0 24 28"><path d="M12 2 22 6v8c0 6-10 12-10 12S2 20 2 14V6Z"/><path d="m7 13 3 3 7-7"/></symbol><symbol id="phone" viewBox="0 0 24 24"><path d="m5 3 4 5-2 3a17 17 0 0 0 6 6l3-2 5 4c-2 6-9 2-14-3S-2 5 5 3Z"/></symbol><symbol id="mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></symbol><symbol id="globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></symbol><symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></symbol><symbol id="download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol><symbol id="flip" viewBox="0 0 24 24"><path d="M20 9a8 8 0 0 0-14-4L3 8m0-5v5h5M4 15a8 8 0 0 0 14 4l3-3m0 5v-5h-5"/></symbol><symbol id="palette" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="8" cy="9" r="1"/><circle cx="14" cy="7" r="1"/><circle cx="17" cy="12" r="1"/><path d="M7 19c-2-6 9-1 5-7"/></symbol><symbol id="edit" viewBox="0 0 24 24"><path d="m15 4 5 5M4 20l5-1L21 7l-4-4L5 15Z"/></symbol><symbol id="print" viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 17H3V9h18v8h-3M6 14h12v7H6Z"/></symbol></svg>
-<main class="viewport"><div class="flipper" id="flipper">
-<section class="face front" id="front" aria-label="Front of business card">
-<header class="brand-row"><div class="brand"><svg class="emblem"><img id="photo1" alt="Executive portrait" src="npslog.png"></svg><div><div class="brand-name">National<br>Protective Service</div><div class="eyebrow">Integrity. Vigilance. Protection.</div></div></div><div class="edition">Executive collection / 01</div></header>
-<div class="hero"><div class="intro"><div class="overline">A commitment to protection</div><h1 id="displayName">Imran <span>Shaik</span></h1><div class="role" id="displayTitle"></div><div class="contacts"><a class="contact" id="phoneLink"><svg><use href="#phone"/></svg><span id="displayPhone"></span></a><a class="contact" id="emailLink"><svg><use href="#mail"/></svg><span id="displayEmail"></span></a><a class="contact" id="websiteLink" target="_blank" rel="noopener noreferrer"><svg><use href="#globe"/></svg><span id="displayWebsite"></span></a></div><div class="hero-actions"><button class="btn primary" onclick="downloadVCard()"><svg><use href="#download"/></svg>Save contact</button><button class="btn" onclick="flipCard()">View reverse<svg><use href="#arrow"/></svg></button></div></div><div class="portrait-wrap"><button class="portrait" onclick="choosePhoto()" aria-label="Change profile photo"><img id="photo" alt="Executive portrait" src="image.jpg"><span class="photo-hint">Change portrait ↗</span></button><div class="portrait-label"><b>Executive profile</b><span id="displayBadgeId"></span></div></div></div>
-<footer class="footer"><div><svg><use href="#globe"/></svg><span id="displayAddress"></span></div><span>Licensed & bonded security</span></footer></section>
-<section class="face back" id="back" aria-label="Back of business card" inert><header class="brand-row"><div class="brand"><svg class="emblem"><use href="#shield"/></svg><div class="brand-name">National<br>Protective Service</div></div><div class="edition">Executive collection / 02</div></header><div class="back-content"><div><div class="overline">Always within reach</div><h2>Protection begins<br>with a connection.</h2><p>Scan the code with your phone’s camera to save my contact details. One connection. Lasting peace of mind.</p><div class="tags"><span>24/7 Security Patrol</span><span>Executive Protection</span><span>Risk Assessment</span></div><button class="btn primary" onclick="downloadVCard()"><svg><use href="#download"/></svg>Download contact</button></div><div class="qr-block"><div class="qr-paper"><div id="qrcode" aria-label="Contact vCard QR code">Loading contact code…</div></div><div class="eyebrow">Scan to save contact</div></div></div><footer class="footer"><span>National Protective Service Corporation</span><span>Your security. Our commitment.</span></footer></section>
-</div></main>
-<nav class="toolbar" aria-label="Card controls"><div><button id="themeButton" aria-expanded="false" aria-controls="themePop" onclick="toggleThemes()"><svg><use href="#palette"/></svg>Themes</button><div class="theme-pop" id="themePop" hidden><div class="eyebrow">Choose your finish</div><div class="swatches" id="swatches"></div><div class="theme-name" id="themeName"></div></div></div><span class="divider"></span><button id="flipButton" onclick="flipCard()"><svg><use href="#flip"/></svg><span id="flipLabel">Reverse</span></button><button onclick="openEditor()"><svg><use href="#edit"/></svg>Customize</button><button class="optional" onclick="window.print()"><svg><use href="#print"/></svg>Print</button></nav>
-<dialog id="editor" aria-labelledby="editorTitle"><div class="drawer-head"><div><div class="eyebrow">Make it yours</div><h2 id="editorTitle">Personalize your card</h2></div><button class="close" onclick="editor.close()" aria-label="Close editor">×</button></div><form class="form" id="form" method="dialog"><button type="button" class="btn" onclick="choosePhoto()">Upload portrait</button><div id="fields" style="display:contents"></div><button class="btn primary" type="submit">Done</button><button class="btn" type="button" onclick="window.print()">Print card</button></form></dialog>
-<input type="file" id="file" accept="image/*" hidden><div class="notice" id="notice" role="status" aria-live="polite"></div>
+
+<!-- Hidden SVG Icon System -->
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="phone" viewBox="0 0 24 24"><path d="m5 3 4 5-2 3a17 17 0 0 0 6 6l3-2 5 4c-2 6-9 2-14-3S-2 5 5 3Z"/></symbol>
+  <symbol id="mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/></symbol>
+  <symbol id="globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="9"/><path d="M3 12h18"/></symbol>
+  <symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></symbol>
+  <symbol id="download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
+  <symbol id="flip" viewBox="0 0 24 24"><path d="M20 9a8 8 0 0 0-14-4L3 8m0-5v5h5M4 15a8 8 0 0 0 14 4l3-3m0 5v-5h-5"/></symbol>
+  <symbol id="palette" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="8" cy="9" r="1"/><circle cx="14" cy="7" r="1"/><circle cx="17" cy="12" r="1"/><path d="M7 19c-2-6 9-1 5-7"/></symbol>
+  <symbol id="edit" viewBox="0 0 24 24"><path d="m15 4 5 5M4 20l5-1L21 7l-4-4L5 15Z"/></symbol>
+  <symbol id="print" viewBox="0 0 24 24"><path d="M6 9V3h12v6M6 17H3V9h18v8h-3M6 14h12v7H6Z"/></symbol>
+</svg>
+
+<main class="viewport">
+  <div class="flipper" id="flipper">
+    
+    <!-- Front Face -->
+    <section class="face front" id="front" aria-label="Front of business card">
+      <header class="brand-row">
+        <div class="brand">
+          <div class="logo-container">
+            <img class="brand-logo-img" id="photo1" alt="National Protective Service Logo" src="npslog.png">
+          </div>
+          <div>
+            <div class="brand-title">National<br>Protective Service</div>
+            <div class="eyebrow">Integrity · Vigilance · Protection</div>
+          </div>
+        </div>
+        <div class="edition">Executive Collection / 01</div>
+      </header>
+
+      <div class="hero">
+        <div class="intro">
+          <div class="overline">Executive Protection & Security</div>
+          <h1 id="displayName">Imran <span>Shaik</span></h1>
+          <div class="role" id="displayTitle">Manager · Security Operations</div>
+          
+          <div class="contacts">
+            <a class="contact" id="phoneLink"><svg><use href="#phone"/></svg><span id="displayPhone"></span></a>
+            <a class="contact" id="emailLink"><svg><use href="#mail"/></svg><span id="displayEmail"></span></a>
+            <a class="contact" id="websiteLink" target="_blank" rel="noopener noreferrer"><svg><use href="#globe"/></svg><span id="displayWebsite"></span></a>
+          </div>
+
+          <div class="hero-actions">
+            <button class="btn primary" onclick="downloadVCard()"><svg><use href="#download"/></svg>Save Contact</button>
+            <button class="btn" onclick="flipCard()">View Reverse<svg><use href="#arrow"/></svg></button>
+          </div>
+        </div>
+
+        <div class="portrait-wrap">
+          <button class="portrait" onclick="choosePhoto()" aria-label="Change profile photo">
+            <img id="photo" alt="Executive portrait" src="image.jpg">
+            <span class="photo-hint">Change Portrait ↗</span>
+          </button>
+          <div class="portrait-label">
+            <b>Executive Profile</b>
+            <span id="displayBadgeId">NPS-8842-EXEC</span>
+          </div>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <div><svg><use href="#globe"/></svg><span id="displayAddress">Corporate Headquarters · San Jose, CA</span></div>
+        <span>Licensed & Bonded Security Agency</span>
+      </footer>
+    </section>
+
+    <!-- Back Face -->
+    <section class="face back" id="back" aria-label="Back of business card" inert>
+      <header class="brand-row">
+        <div class="brand">
+          <div class="logo-container">
+            <img class="brand-logo-img" alt="National Protective Service Logo" src="npslog.png">
+          </div>
+          <div class="brand-title">National<br>Protective Service</div>
+        </div>
+        <div class="edition">Executive Collection / 02</div>
+      </header>
+
+      <div class="back-content">
+        <div>
+          <div class="overline">Instant Connection</div>
+          <h2>Protection begins<br>with a connection.</h2>
+          <p>Scan this QR code with your mobile device camera to save contact credentials directly to your address book.</p>
+          <div class="tags">
+            <span>24/7 Security Patrol</span>
+            <span>Executive Protection</span>
+            <span>Risk Assessment</span>
+          </div>
+          <button class="btn primary" onclick="downloadVCard()"><svg><use href="#download"/></svg>Download vCard</button>
+        </div>
+
+        <div class="qr-block">
+          <div class="qr-paper">
+            <div id="qrcode" aria-label="Contact vCard QR code">Generating QR Code...</div>
+          </div>
+          <div class="eyebrow" style="margin-top: 10px; color: var(--accent)">Scan to save details</div>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <span>National Protective Service Corporation</span>
+        <span>Your Security. Our Commitment.</span>
+      </footer>
+    </section>
+
+  </div>
+</main>
+
+<!-- Bottom Navigation Bar -->
+<nav class="toolbar" aria-label="Card controls">
+  <div>
+    <button id="themeButton" aria-expanded="false" aria-controls="themePop" onclick="toggleThemes()"><svg><use href="#palette"/></svg>Themes</button>
+    <div class="theme-pop" id="themePop" hidden>
+      <div class="eyebrow">Select Finish</div>
+      <div class="swatches" id="swatches"></div>
+      <div class="theme-name" id="themeName" style="margin-top: 10px; font-size: 11px; color: var(--accent);"></div>
+    </div>
+  </div>
+  <span class="divider"></span>
+  <button id="flipButton" onclick="flipCard()"><svg><use href="#flip"/></svg><span id="flipLabel">Reverse</span></button>
+  <button onclick="openEditor()"><svg><use href="#edit"/></svg>Customize</button>
+  <button onclick="window.print()"><svg><use href="#print"/></svg>Print</button>
+</nav>
+
+<!-- Drawer Editor -->
+<dialog id="editor" aria-labelledby="editorTitle">
+  <div class="drawer-head">
+    <div>
+      <div class="eyebrow">Card Editor</div>
+      <h2 id="editorTitle">Personalize Card</h2>
+    </div>
+    <button class="close" onclick="editor.close()" aria-label="Close editor">×</button>
+  </div>
+  <form class="form" id="form" method="dialog">
+    <button type="button" class="btn" onclick="choosePhoto()">Upload Portrait Photo</button>
+    <div id="fields" style="display:contents"></div>
+    <button class="btn primary" type="submit">Save Changes</button>
+  </form>
+</dialog>
+
+<input type="file" id="file" accept="image/*" hidden>
+<div class="notice" id="notice" role="status" aria-live="polite"></div>
+
 <script>
-const $=id=>document.getElementById(id);
-const data={Name:'Imran Shaik',Title:'Manager · Security Operations',Phone:'+1 (555) 019-2834',Email:'b.jupalli@nationalprotectiveservice.com',Website:'https://nationalprotectiveservice.com',BadgeId:'NPS-8842-EXEC',Address:'Corporate Headquarters · San Jose, CA'};
-const themes={onyx:['Onyx & Champagne','#d5c49a'],sapphire:['Midnight Sapphire','#9fc8ff'],emerald:['Heritage Emerald','#9ee0b6'],ivory:['Warm Ivory','#f5f1e8'],plum:['Velvet Plum','#e5b8d0']};
-let reversed=false,qrTimer,noticeTimer,photoURL;
-const editor=$('editor');
-Object.entries(data).forEach(([key,value])=>{const label=document.createElement('label');label.textContent=({Name:'Full name',Title:'Job title',Phone:'Phone number',Email:'Email address',Website:'Website URL',BadgeId:'Credential ID',Address:'Office address'})[key];const input=document.createElement('input');input.value=value;input.name=key;input.maxLength=key==='Website'?250:120;input.type=key==='Email'?'email':key==='Website'?'url':key==='Phone'?'tel':'text';input.addEventListener('input',()=>{data[key]=input.value;render();clearTimeout(qrTimer);qrTimer=setTimeout(generateQR,300)});label.append(input);$('fields').append(label)});
-Object.entries(themes).forEach(([key,[label,color]])=>{const button=document.createElement('button');button.className='swatch';button.style.setProperty('--swatch',color);button.title=label;button.setAttribute('aria-label',label);button.dataset.theme=key;button.onclick=()=>setTheme(key);$('swatches').append(button)});
-function setTheme(key){if(!themes[key])key='onyx';document.documentElement.dataset.theme=key;$('themeName').textContent=themes[key][0];document.querySelectorAll('.swatch').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.theme===key)));try{localStorage.setItem('nps-card-theme',key)}catch{}}
-function toggleThemes(){const open=$('themePop').hidden;$('themePop').hidden=!open;$('themeButton').setAttribute('aria-expanded',String(open))}
-function closeThemes(){$('themePop').hidden=true;$('themeButton').setAttribute('aria-expanded','false')}
-function flipCard(){const wasInFace=$('flipper').contains(document.activeElement);reversed=!reversed;$('flipper').classList.toggle('flipped',reversed);$('front').inert=reversed;$('back').inert=!reversed;$('flipLabel').textContent=reversed?'Front':'Reverse';closeThemes();if(wasInFace)$('flipButton').focus()}
-function openEditor(){closeThemes();editor.showModal()}
-document.addEventListener('click',event=>{if(!event.target.closest('.theme-pop')&&!event.target.closest('#themeButton'))closeThemes()});document.addEventListener('keydown',event=>{if(event.key==='Escape')closeThemes()});editor.addEventListener('click',event=>{if(event.target===editor&&event.clientX<editor.getBoundingClientRect().left)editor.close()});
-function render(){Object.keys(data).forEach(key=>{if(key!=='Name')$('display'+key).textContent=data[key]});const words=data.Name.trim().split(/\s+/);const surname=words.length>1?words.pop():'';$('displayName').textContent=words.join(' ')||'Your name';if(surname){const span=document.createElement('span');span.textContent=surname;$('displayName').append(span)}$('phoneLink').href='tel:'+data.Phone.replace(/[^\d+]/g,'');$('emailLink').href='mailto:'+encodeURIComponent(data.Email);try{const url=new URL(data.Website);if(!['https:','http:'].includes(url.protocol))throw Error();$('websiteLink').href=url.href}catch{$('websiteLink').removeAttribute('href')}}
-const esc=value=>value.replace(/\\/g,'\\\\').replace(/\r?\n/g,'\\n').replace(/;/g,'\\;').replace(/,/g,'\\,');
-function vcard(){return ['BEGIN:VCARD','VERSION:3.0','FN:'+esc(data.Name),'N:'+esc(data.Name)+';;;;','ORG:National Protective Service','TITLE:'+esc(data.Title),'TEL;TYPE=WORK:'+esc(data.Phone),'EMAIL:'+esc(data.Email),'URL:'+esc(data.Website),'ADR;TYPE=WORK:;;'+esc(data.Address)+';;;;','END:VCARD'].join('\r\n')}
-function generateQR(){const node=$('qrcode');node.replaceChildren();try{if(!window.QRCode)throw Error();new QRCode(node,{text:vcard(),width:240,height:240,colorDark:'#101411',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});node.removeAttribute('title')}catch{node.textContent='QR unavailable. Use Save contact to download your details.'}}
-function downloadVCard(){const blob=new Blob([vcard()],{type:'text/vcard;charset=utf-8'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download=(data.Name.replace(/[^\p{L}\p{N}_-]+/gu,'_')||'Contact')+'.vcf';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);notify('Contact file downloaded')}
-function notify(message){$('notice').textContent=message;clearTimeout(noticeTimer);noticeTimer=setTimeout(()=>$('notice').textContent='',3200)}
-function choosePhoto(){$('file').click()}
-$('file').addEventListener('change',event=>{const file=event.target.files[0];if(!file)return;if(!file.type.startsWith('image/')||file.size>10*1024*1024){notify('Choose an image smaller than 10 MB.');return}const url=URL.createObjectURL(file);const image=new Image();image.onload=()=>{if(photoURL)URL.revokeObjectURL(photoURL);photoURL=url;$('photo').src=url;notify('Portrait updated')};image.onerror=()=>{URL.revokeObjectURL(url);notify('This image could not be opened.')};image.src=url;event.target.value=''});
-try{setTheme(localStorage.getItem('nps-card-theme')||'onyx')}catch{setTheme('onyx')}render();window.addEventListener('load',generateQR);
+const $ = id => document.getElementById(id);
+const data = {
+  Name: 'Imran Shaik',
+  Title: 'Manager · Security Operations',
+  Phone: '+1 (555) 019-2834',
+  Email: 'b.jupalli@nationalprotectiveservice.com',
+  Website: 'https://nationalprotectiveservice.com',
+  BadgeId: 'NPS-8842-EXEC',
+  Address: 'Corporate Headquarters · San Jose, CA'
+};
+
+const themes = {
+  onyx: ['Onyx & Champagne', '#d5c49a'],
+  sapphire: ['Midnight Sapphire', '#8cb6f5'],
+  emerald: ['Heritage Emerald', '#78d6a3'],
+  ivory: ['Warm Ivory', '#826639'],
+  plum: ['Velvet Plum', '#de9bc0']
+};
+
+let reversed = false, qrTimer, noticeTimer, photoURL;
+const editor = $('editor');
+
+// Build Form Inputs
+Object.entries(data).forEach(([key, value]) => {
+  const label = document.createElement('label');
+  label.textContent = ({
+    Name: 'Full Name', Title: 'Job Title', Phone: 'Phone Number',
+    Email: 'Email Address', Website: 'Website URL', BadgeId: 'Credential ID', Address: 'Office Address'
+  })[key];
+  
+  const input = document.createElement('input');
+  input.value = value;
+  input.name = key;
+  input.maxLength = key === 'Website' ? 250 : 120;
+  input.type = key === 'Email' ? 'email' : key === 'Website' ? 'url' : key === 'Phone' ? 'tel' : 'text';
+  
+  input.addEventListener('input', () => {
+    data[key] = input.value;
+    render();
+    clearTimeout(qrTimer);
+    qrTimer = setTimeout(generateQR, 300);
+  });
+  
+  label.append(input);
+  $('fields').append(label);
+});
+
+// Theme Swatches Setup
+Object.entries(themes).forEach(([key, [label, color]]) => {
+  const button = document.createElement('button');
+  button.className = 'swatch';
+  button.style.setProperty('--swatch', color);
+  button.title = label;
+  button.setAttribute('aria-label', label);
+  button.dataset.theme = key;
+  button.onclick = () => setTheme(key);
+  $('swatches').append(button);
+});
+
+function setTheme(key) {
+  if (!themes[key]) key = 'onyx';
+  document.documentElement.dataset.theme = key;
+  $('themeName').textContent = themes[key][0];
+  document.querySelectorAll('.swatch').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.theme === key)));
+  try { localStorage.setItem('nps-card-theme', key); } catch {}
+}
+
+function toggleThemes() {
+  const open = $('themePop').hidden;
+  $('themePop').hidden = !open;
+  $('themeButton').setAttribute('aria-expanded', String(open));
+}
+
+function closeThemes() {
+  $('themePop').hidden = true;
+  $('themeButton').setAttribute('aria-expanded', 'false');
+}
+
+function flipCard() {
+  reversed = !reversed;
+  $('flipper').classList.toggle('flipped', reversed);
+  $('front').inert = reversed;
+  $('back').inert = !reversed;
+  $('flipLabel').textContent = reversed ? 'Front' : 'Reverse';
+  closeThemes();
+}
+
+function openEditor() { closeThemes(); editor.showModal(); }
+
+document.addEventListener('click', e => {
+  if (!e.target.closest('.theme-pop') && !e.target.closest('#themeButton')) closeThemes();
+});
+
+function render() {
+  Object.keys(data).forEach(key => {
+    if (key !== 'Name' && $('display' + key)) $('display' + key).textContent = data[key];
+  });
+  
+  const words = data.Name.trim().split(/\s+/);
+  const surname = words.length > 1 ? words.pop() : '';
+  $('displayName').textContent = words.join(' ') || 'Your Name';
+  if (surname) {
+    const span = document.createElement('span');
+    span.textContent = surname;
+    $('displayName').append(span);
+  }
+  
+  $('phoneLink').href = 'tel:' + data.Phone.replace(/[^\d+]/g, '');
+  $('emailLink').href = 'mailto:' + encodeURIComponent(data.Email);
+  try {
+    const url = new URL(data.Website);
+    if (['https:', 'http:'].includes(url.protocol)) $('websiteLink').href = url.href;
+  } catch {
+    $('websiteLink').removeAttribute('href');
+  }
+}
+
+const esc = val => val.replace(/\\/g, '\\\\').replace(/\r?\n/g, '\\n').replace(/;/g, '\\;').replace(/,/g, '\\,');
+
+function vcard() {
+  return [
+    'BEGIN:VCARD',
+    'VERSION:3.0',
+    'FN:' + esc(data.Name),
+    'N:' + esc(data.Name) + ';;;;',
+    'ORG:National Protective Service',
+    'TITLE:' + esc(data.Title),
+    'TEL;TYPE=WORK:' + esc(data.Phone),
+    'EMAIL:' + esc(data.Email),
+    'URL:' + esc(data.Website),
+    'ADR;TYPE=WORK:;;' + esc(data.Address) + ';;;;',
+    'END:VCARD'
+  ].join('\r\n');
+}
+
+function generateQR() {
+  const node = $('qrcode');
+  node.replaceChildren();
+  try {
+    if (!window.QRCode) throw Error();
+    new QRCode(node, {
+      text: vcard(),
+      width: 200,
+      height: 200,
+      colorDark: "#101411",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  } catch {
+    node.textContent = 'QR Code generation unavailable.';
+  }
+}
+
+function downloadVCard() {
+  const blob = new Blob([vcard()], { type: 'text/vcard;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = (data.Name.replace(/[^\p{L}\p{N}_-]+/gu, '_') || 'Contact') + '.vcf';
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  notify('Contact vCard File Downloaded');
+}
+
+function notify(msg) {
+  $('notice').textContent = msg;
+  clearTimeout(noticeTimer);
+  noticeTimer = setTimeout(() => $('notice').textContent = '', 3000);
+}
+
+function choosePhoto() { $('file').click(); }
+
+$('file').addEventListener('change', event => {
+  const file = event.target.files[0];
+  if (!file) return;
+  if (!file.type.startsWith('image/') || file.size > 10 * 1024 * 1024) {
+    notify('Please upload an image file under 10 MB.');
+    return;
+  }
+  const url = URL.createObjectURL(file);
+  $('photo').src = url;
+  notify('Portrait updated successfully');
+});
+
+try { setTheme(localStorage.getItem('nps-card-theme') || 'onyx'); } catch { setTheme('onyx'); }
+render();
+window.addEventListener('load', generateQR);
 </script>
 </body>
 </html>
